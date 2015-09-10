@@ -1,6 +1,6 @@
 # Set minimum CMake version
 # NOTE: Currently determined by use of TARGET_COMPILE_OPTIONS
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 
 # Silence CMake warnings by adopting modern behavior for MACOSX_RPATH
@@ -22,7 +22,6 @@ SET(INCLUDE_INSTALL_DIR include CACHE PATH "Install subdirectory for headers")
 # Handle common configuration and configuration based on platform
 SET(KEYTAR_INCLUDE_DIRS src)
 SET(KEYTAR_LINK_LIBRARIES)
-SET(KEYTAR_CXX_FLAGS)
 SET(KEYTAR_INSTALL_HEADERS src/keytar.h)
 SET(KEYTAR_SOURCES)
 IF(CMAKE_SYSTEM_NAME STREQUAL "Windows")
@@ -53,7 +52,6 @@ ELSE()
     INCLUDE(FindPkgConfig)
     PKG_CHECK_MODULES(GNOME_KEYRING REQUIRED gnome-keyring-1)
     LIST(APPEND KEYTAR_INCLUDE_DIRS ${GNOME_KEYRING_INCLUDE_DIRS})
-    LIST(APPEND KEYTAR_CXX_FLAGS ${GNOME_KEYRING_CFLAGS})
     LIST(APPEND KEYTAR_LINK_LIBRARIES ${GNOME_KEYRING_LIBRARIES})
 
     # Add source files
@@ -64,7 +62,6 @@ ENDIF()
 # Create library (allow user to specify type)
 ADD_LIBRARY(keytar ${KEYTAR_SOURCES})
 TARGET_INCLUDE_DIRECTORIES(keytar PRIVATE ${KEYTAR_INCLUDE_DIRS})
-TARGET_COMPILE_OPTIONS(keytar PRIVATE ${KEYTAR_CXX_FLAGS})
 TARGET_LINK_LIBRARIES(keytar PRIVATE ${KEYTAR_LINK_LIBRARIES})
 
 
@@ -85,7 +82,6 @@ IF(BUILD_TESTS)
     # Create the test executable
     ADD_EXECUTABLE(keytar_test test/keytar_test.cc)
     TARGET_INCLUDE_DIRECTORIES(keytar_test PRIVATE ${KEYTAR_INCLUDE_DIRS})
-    TARGET_COMPILE_OPTIONS(keytar_test PRIVATE ${KEYTAR_CXX_FLAGS})
     TARGET_LINK_LIBRARIES(keytar_test PRIVATE keytar)
 
     # Add the test

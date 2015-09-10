@@ -64,6 +64,7 @@ ENDIF()
 # Create library (allow user to specify type)
 ADD_LIBRARY(keytar ${KEYTAR_SOURCES})
 TARGET_INCLUDE_DIRECTORIES(keytar PRIVATE ${KEYTAR_INCLUDE_DIRS})
+TARGET_COMPILE_OPTIONS(keytar PRIVATE ${KEYTAR_CXX_FLAGS})
 TARGET_LINK_LIBRARIES(keytar PRIVATE ${KEYTAR_LINK_LIBRARIES})
 
 
@@ -84,6 +85,7 @@ IF(BUILD_TESTS)
     # Create the test executable
     ADD_EXECUTABLE(keytar_test test/keytar_test.cc)
     TARGET_INCLUDE_DIRECTORIES(keytar_test PRIVATE ${KEYTAR_INCLUDE_DIRS})
+    TARGET_COMPILE_OPTIONS(keytar_test PRIVATE ${KEYTAR_CXX_FLAGS})
     TARGET_LINK_LIBRARIES(keytar_test PRIVATE keytar)
 
     # Add the test

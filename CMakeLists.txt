@@ -48,8 +48,8 @@ ELSEIF(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     # Add source files
     LIST(APPEND KEYTAR_SOURCES src/keytar_mac.cc)
 ELSE()
-    # On other POSIX systems, the only currently supported backend is
-    # gnome-keyring
+    # On other POSIX systems, the only currently supported backend is GNOME
+    # Keyring
     INCLUDE(FindPkgConfig)
     PKG_CHECK_MODULES(GNOME_KEYRING REQUIRED gnome-keyring-1)
     LIST(APPEND KEYTAR_INCLUDE_DIRS ${GNOME_KEYRING_INCLUDE_DIRS})

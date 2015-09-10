@@ -1,0 +1,33 @@
+# Versioning
+version: {build}
+
+# Configuration
+environment:
+  matrix:
+    - CMAKE_BUILD_TYPE: Debug
+    - CMAKE_BUILD_TYPE: Release
+
+# Set up clone path (this is the default, but just to make it explicit)
+clone_folder: c:\projects\keytar
+
+# Run CMake and build (note that Visual Studio generators are multi-target, so
+# we don't have to specify CMAKE_BUILD_TYPE at configure time)
+build_script:
+  - cd c:\projects\keytar
+  - mkdir build
+  - cd build
+  - cmake -G"Visual Studio 11" ..
+  - cmake --build . --config %CMAKE_BUILD_TYPE%
+
+# Run tests
+# HACK: Use 'call ...' to invoke the test runner because AppVeyor can't parse a
+# command starting with %
+test_script:
+  - cd c:\projects\keytar\build
+  - ctest --output-on-failure
+
+# Send notifications
+notifications:
+  - provider: Email
+    to:
+      - jacob@havoc.io

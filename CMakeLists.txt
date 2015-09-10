@@ -19,10 +19,12 @@ SET(LIB_INSTALL_DIR lib CACHE PATH "Install subdirectory for libraries")
 SET(INCLUDE_INSTALL_DIR include CACHE PATH "Install subdirectory for headers")
 
 
+# Add local include directories
+INCLUDE_DIRECTORIES(src)
+
+
 # Handle common configuration and configuration based on platform
-SET(KEYTAR_INCLUDE_DIRS src)
 SET(KEYTAR_LINK_LIBRARIES)
-SET(KEYTAR_INSTALL_HEADERS src/keytar.h)
 SET(KEYTAR_SOURCES)
 IF(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     # Windows doesn't require any special include paths or libraries
@@ -51,7 +53,7 @@ ELSE()
     # Keyring
     INCLUDE(FindPkgConfig)
     PKG_CHECK_MODULES(GNOME_KEYRING REQUIRED gnome-keyring-1)
-    LIST(APPEND KEYTAR_INCLUDE_DIRS ${GNOME_KEYRING_INCLUDE_DIRS})
+    INCLUDE_DIRECTORIES(${GNOME_KEYRING_INCLUDE_DIRS})
     LIST(APPEND KEYTAR_LINK_LIBRARIES ${GNOME_KEYRING_LIBRARIES})
 
     # Add source files
@@ -61,7 +63,6 @@ ENDIF()
 
 # Create library (allow user to specify type)
 ADD_LIBRARY(keytar ${KEYTAR_SOURCES})
-TARGET_INCLUDE_DIRECTORIES(keytar PRIVATE ${KEYTAR_INCLUDE_DIRS})
 TARGET_LINK_LIBRARIES(keytar PRIVATE ${KEYTAR_LINK_LIBRARIES})
 
 
@@ -71,7 +72,7 @@ INSTALL(TARGETS keytar
     LIBRARY DESTINATION "${LIB_INSTALL_DIR}"
     ARCHIVE DESTINATION "${LIB_INSTALL_DIR}"
 )
-INSTALL(FILES ${KEYTAR_INSTALL_HEADERS} DESTINATION "${INCLUDE_INSTALL_DIR}")
+INSTALL(FILES src/keytar.h DESTINATION "${INCLUDE_INSTALL_DIR}")
 
 
 # Add tests if request
@@ -81,7 +82,6 @@ IF(BUILD_TESTS)
 
     # Create the test executable
     ADD_EXECUTABLE(keytar_test test/keytar_test.cc)
-    TARGET_INCLUDE_DIRECTORIES(keytar_test PRIVATE ${KEYTAR_INCLUDE_DIRS})
     TARGET_LINK_LIBRARIES(keytar_test PRIVATE keytar)
 
     # Add the test

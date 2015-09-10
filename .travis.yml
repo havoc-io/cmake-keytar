@@ -6,8 +6,8 @@ os:
   - osx
   - linux
 
-# Use container-based infrastructure for Linux
-sudo: false
+# Disable use of container-based infrastructure for Linux
+sudo: true
 
 # Add additional required packages for Linux
 addons:

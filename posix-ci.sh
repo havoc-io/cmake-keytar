@@ -13,7 +13,12 @@ cmake -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE} .. || exit $?
 cmake --build . || exit $?
 
 # Test
-ctest --output-on-failure || exit $?
+if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+  ctest --output-on-failure || exit $?
+else
+  # HACK: Have to use a virtual X11 environment for GNOME code
+  xvfb ctest --output-on-failure || exit $?
+fi
 
 # All done
 cd .. || exit $?

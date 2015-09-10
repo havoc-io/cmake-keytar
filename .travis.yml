@@ -1,11 +1,21 @@
 # Set the project language
-# NOTE: We're not really using Objective-C, just normal C, but Travis will only
-# send you to an OS X worker if you specify Objective-C or if you have multi-OS
-# builds enabled for your account, the latter of which are currently
-# unavailable:
-#   http://docs.travis-ci.com/user/multi-os/
-#   http://blog.travis-ci.com/2014-05-13-multi-os-feature-available/
-language: objective-c
+language: cpp
+
+# Set test platforms
+os:
+  - osx
+  - linux
+
+# Use container-based infrastructure for Linux
+sudo: false
+
+# Add additional required packages for Linux
+addons:
+  apt:
+    packages:
+      - xvfb
+      - gnome-keyring
+      - libgnome-keyring-dev
 
 # Configuration
 env:

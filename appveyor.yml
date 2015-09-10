@@ -24,7 +24,7 @@ build_script:
 # command starting with %
 test_script:
   - cd c:\projects\keytar\build
-  - ctest --output-on-failure
+  - ctest --build-config %CMAKE_BUILD_TYPE% --output-on-failure
 
 # Send notifications
 notifications:

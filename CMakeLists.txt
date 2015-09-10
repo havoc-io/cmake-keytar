@@ -66,7 +66,7 @@ ENDIF()
 
 # Create library (allow user to specify type)
 ADD_LIBRARY(keytar ${KEYTAR_SOURCES})
-TARGET_LINK_LIBRARIES(keytar PRIVATE ${KEYTAR_LINK_LIBRARIES})
+TARGET_LINK_LIBRARIES(keytar ${KEYTAR_LINK_LIBRARIES})
 
 
 # Create an install target
@@ -85,7 +85,7 @@ IF(BUILD_TESTS)
 
     # Create the test executable
     ADD_EXECUTABLE(keytar_test test/keytar_test.cc)
-    TARGET_LINK_LIBRARIES(keytar_test PRIVATE keytar)
+    TARGET_LINK_LIBRARIES(keytar_test keytar)
 
     # Add the test
     ADD_TEST(keytar_test keytar_test)

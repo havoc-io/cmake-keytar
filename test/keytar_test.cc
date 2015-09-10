@@ -36,23 +36,43 @@ const char * test_non_existent_find() {
 
 // Make sure the standard add/get/find/delete
 const char * test_password_lifecycle() {
+    // Set up testing constants
     const std::string service("keytar-test-service");
     const std::string account("keytar@example.org");
     const std::string password("$uP3RseCr1t!");
-    std::string password_got;
-    std::string password_found;
+    const std::string alternate_password("Ub3R$3CrE7!?!");
+
+    // Create buffer for retrieval
+    std::string password_retrieved;
+
+    // Try to add a password
     mu_assert("error: unable to add password",
               keytar::AddPassword(service, account, password));
+
+    // Try to get the password
     mu_assert("error: unable to get password",
-              keytar::GetPassword(service, account, &password_got));
+              keytar::GetPassword(service, account, &password_retrieved));
     mu_assert("error: retrieved password doesn't match password stored",
-              password == password_got);
+              password_retrieved == password);
+
+    // Try to find the password
     mu_assert("error: unable to find password",
-              keytar::FindPassword(service, &password_found));
+              keytar::FindPassword(service, &password_retrieved));
     mu_assert("error: found password doesn't match password stored",
-              password == password_found);
+              password_retrieved == password);
+
+    // Try to replace the password
+    mu_assert("error: unable to replace password",
+              keytar::ReplacePassword(service, account, alternate_password));
+    mu_assert("error: unable to get replaced password",
+              keytar::GetPassword(service, account, &password_retrieved));
+    mu_assert("error: retrieved password doesn't match new password",
+              password_retrieved == alternate_password);
+
+    // Try to delete the password
     mu_assert("error: unable to delete password",
               keytar::DeletePassword(service, account));
+
     return 0;
 }
 

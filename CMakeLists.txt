@@ -28,7 +28,9 @@ INCLUDE_DIRECTORIES(src)
 
 # Handle common configuration and configuration based on platform
 SET(KEYTAR_LINK_LIBRARIES)
-SET(KEYTAR_SOURCES)
+SET(KEYTAR_SOURCES
+    src/keytar_common.cc
+)
 IF(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     # Windows doesn't require any special include paths or libraries
 

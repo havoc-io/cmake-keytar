@@ -30,6 +30,11 @@ bool DeletePassword(const std::string& service, const std::string& account);
 KEYTAR_API
 bool FindPassword(const std::string& service, std::string* password);
 
+KEYTAR_API
+bool ReplacePassword(const std::string& service,
+                     const std::string& account,
+                     const std::string& password);
+
 }  // namespace keytar
 
 #endif  // SRC_KEYTAR_H_

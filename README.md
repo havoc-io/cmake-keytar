@@ -98,6 +98,7 @@ Example usage:
         const std::string service("keytar-test-service");
         const std::string account("keytar@example.org");
         const std::string password("$uP3RseCr1t!");
+        const std::string new_password("Ub3R$3CrE7!?!");
 
         // Add a password
         if (!keytar::AddPassword(service, account, password)) {
@@ -116,6 +117,12 @@ Example usage:
         std::string found;
         if (!keytar::FindPassword(service, &found)) {
             std::cerr << "error: unable to find password" << std::endl;
+            return 1;
+        }
+
+        // Replace a password
+        if (!keytar::ReplacePassword(service, account, new_password)) {
+            std::cerr << "error: unable to replace password" << std::endl;
             return 1;
         }
 
@@ -139,9 +146,3 @@ unmodified, but some modifications were necessary to make shared libraries work.
 The `upstream` branch follows node-keytar's `master` branch, so all changes to
 node-keytar will be pulled into `upstream` and then merged into keytar's
 `master` branch.
-
-
-## Future work
-
-- Implement the "replace" functionality from node-keytar.  This will likely
-  involve adding `src/keytar.cc` and just implementing the function there.

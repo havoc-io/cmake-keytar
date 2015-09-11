@@ -141,9 +141,39 @@ Example usage:
 ## Updating
 
 This fork will attempt to keep in sync with node-keytar, and tags will be
-duplicated but prefixed with "standalone-".  The code remains largely
+duplicated but prefixed with `standalone-`.  The code remains largely
 unmodified, but some modifications were necessary to make shared libraries work.
 
-The `upstream` branch follows node-keytar's `master` branch, so all changes to
-node-keytar will be pulled into `upstream` and then merged into keytar's
-`master` branch.
+The strategy for bringing in upstream changes is as follows:
+
+1. First, make sure that the node-keytar repository is available as a remote for
+   your copy of keytar.  You can check this by running `git remote -v` and
+   seeing if a remote named `upstream` with the correct location appears in the
+   output.  If not, you just need to run
+   `git remote add upstream https://github.com/atom/node-keytar.git`.  You can,
+   of course, use a different remote name than `upstream`, but the rest of these
+   instructions will operate under the assumption that this is the name you have
+   chosen.
+2. Fetch a copy of the upstream changes with `git fetch upstream`
+3. Merge in upstream changes by switching to keytar's `master` branch and
+   running `git merge upstream/master`.  It's very likely that you'll have
+   conflicts, which will generally be of the following types:
+   - Upstream modifications to files that don't exist in keytar because they
+     have been deleted.  If these files are not necessary, simply `git rm` them
+     from the conflicted merge state.
+   - Upstream modifications to files that do exist in keytar but have been
+     changed by both projects.  In this case you have to handle the conflicts
+     like any other, and then `git add` them.
+   Once you've sorted out any merge conflicts, simply run `git commit` and then
+   push.  If, by some miracle, you didn't have any merge conflicts, then
+   congratulations, you can just continue to the next step without any conflict
+   resolution.
+4. Make sure CI tests pass.
+5. If any node-keytar tags have been added, these should ideally be mirrored in
+   keytar with the `standalone-` prefix.  Depending on how lazy the maintainer
+   is, multiple tags may have been added in between upstream merges, but unless
+   you do a merge at each upstream tag, you'll only be able to create keytar
+   tags corresponding to the latest upstream tag, because the intermediate tags
+   won't have any corresponding merged commit in keytar.  As long as we keep up
+   with things, this shouldn't be a problem.  Even if we skip one or two
+   upstream releases, no biggie.

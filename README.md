@@ -4,9 +4,10 @@ This is a fork of the [node-keytar](https://github.com/atom/node-keytar) package
 that is designed to run as a standalone C++ library outside of a Node.js
 environment.  
 
-This package is designed to add, get, find, and delete passwords in the system's
-keychain.  On OS X the passwords are managed by the Keychain, on Linux they are
-managed by GNOME Keyring, and on Windows they are managed by Credential Vault.
+This package is designed to add, get, find, replace, and delete passwords in the
+system's keychain.  On OS X the passwords are managed by the Keychain, on Linux
+they are managed by GNOME Keyring, and on Windows they are managed by Credential
+Vault.
 
 
 ## Status

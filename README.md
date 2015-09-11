@@ -27,7 +27,7 @@ The module is currently tested<sup>1</sup> on the following platforms:
 1: Sadly, the gnome-keyring-daemon does not work on Travis CI, so while the
 library and tests are built on Linux, the tests are not actually run.  If you
 want to execute the tests, you'll have to build and run them locally :cry:.
-You'll probably have a lot better luck if you do this in a GNOME.
+You'll probably have a lot better luck if you do this in a GNOME session.
 </sup>
 
 

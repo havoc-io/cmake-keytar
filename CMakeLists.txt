@@ -1,5 +1,4 @@
 # Set minimum CMake version
-# NOTE: Currently determined by use of TARGET_COMPILE_OPTIONS
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 

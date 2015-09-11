@@ -141,7 +141,7 @@ Example usage:
 ## Updating
 
 This fork will attempt to keep in sync with node-keytar, and tags will be
-duplicated but prefixed with `standalone-`.  The code remains largely
+duplicated but suffixed with `-standalone`.  The code remains largely
 unmodified, but some modifications were necessary to make shared libraries work.
 
 The strategy for bringing in upstream changes is as follows:
@@ -174,7 +174,7 @@ The strategy for bringing in upstream changes is as follows:
    `git push --tags`.
 6. Make sure CI tests pass.
 7. If any node-keytar tags have been added, these should ideally be mirrored in
-   keytar with the `standalone-` prefix.  Depending on how lazy the maintainer
+   keytar with the `-standalone` suffix.  Depending on how lazy the maintainer
    is, multiple tags may have been added in between upstream merges, but unless
    you do a merge at each upstream tag, you'll only be able to create keytar
    tags corresponding to the latest upstream tag, because the intermediate tags

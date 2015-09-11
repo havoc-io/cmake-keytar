@@ -154,7 +154,8 @@ The strategy for bringing in upstream changes is as follows:
    of course, use a different remote name than `upstream`, but the rest of these
    instructions will operate under the assumption that this is the name you have
    chosen.
-2. Fetch a copy of the upstream changes with `git fetch upstream`
+2. Fetch a copy of the upstream changes with `git fetch upstream` and the
+   upstream tags with `git fetch --tags upstream`.
 3. Merge in upstream changes by switching to keytar's `master` branch and
    running `git merge upstream/master`.
 3. It's very likely that you'll have conflicts, which will generally be of the
@@ -169,8 +170,10 @@ The strategy for bringing in upstream changes is as follows:
    push.  If, by some miracle, you didn't have any merge conflicts, then
    congratulations, you can just continue to the next step without any conflict
    resolution.
-5. Make sure CI tests pass.
-6. If any node-keytar tags have been added, these should ideally be mirrored in
+5. Push the merged changes with `git push` and push upstream tags with
+   `git push --tags`.
+6. Make sure CI tests pass.
+7. If any node-keytar tags have been added, these should ideally be mirrored in
    keytar with the `standalone-` prefix.  Depending on how lazy the maintainer
    is, multiple tags may have been added in between upstream merges, but unless
    you do a merge at each upstream tag, you'll only be able to create keytar

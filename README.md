@@ -156,20 +156,21 @@ The strategy for bringing in upstream changes is as follows:
    chosen.
 2. Fetch a copy of the upstream changes with `git fetch upstream`
 3. Merge in upstream changes by switching to keytar's `master` branch and
-   running `git merge upstream/master`.  It's very likely that you'll have
-   conflicts, which will generally be of the following types:
+   running `git merge upstream/master`.
+3. It's very likely that you'll have conflicts, which will generally be of the
+   following types:
    - Upstream modifications to files that don't exist in keytar because they
      have been deleted.  If these files are not necessary, simply `git rm` them
      from the conflicted merge state.
    - Upstream modifications to files that do exist in keytar but have been
      changed by both projects.  In this case you have to handle the conflicts
      like any other, and then `git add` them.
-   Once you've sorted out any merge conflicts, simply run `git commit` and then
+4. Once you've sorted out any merge conflicts, simply run `git commit` and then
    push.  If, by some miracle, you didn't have any merge conflicts, then
    congratulations, you can just continue to the next step without any conflict
    resolution.
-4. Make sure CI tests pass.
-5. If any node-keytar tags have been added, these should ideally be mirrored in
+5. Make sure CI tests pass.
+6. If any node-keytar tags have been added, these should ideally be mirrored in
    keytar with the `standalone-` prefix.  Depending on how lazy the maintainer
    is, multiple tags may have been added in between upstream merges, but unless
    you do a merge at each upstream tag, you'll only be able to create keytar
